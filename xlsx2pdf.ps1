@@ -48,7 +48,7 @@ $xlsx_app = New-Object -ComObject excel.application
 $xlsx_app.visible = $true
 
 # Get all objects of type .ppt? in $curr_path and its subfolders
-Get-ChildItem -Path $curr_path -Recurse -Filter *ABC.xls? | ForEach-Object {
+Get-ChildItem -Path $curr_path -Recurse -Filter *.xls? | ForEach-Object {
     ##
     ## powershell - What is the difference between $_. and $_ - Stack Overflow
     ## https://stackoverflow.com/questions/35209737/what-is-the-difference-between-and
