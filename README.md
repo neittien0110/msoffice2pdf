@@ -20,3 +20,9 @@ Thank to mp4096, the author of the script ppt2pdf which I customized to this scr
 and from mp4096
   "Adapted from http://stackoverflow.com/questions/16534292/basic-powershell-batch-convert-word-docx-to-pdf
    Thanks to MFT, takabanana, ComFreek"
+
+# xlsx2pdf
+convert all excel sheets to pdf
+NOTE: Change 2 parameters below to force the begin and end page indexes.
+    $From = [System.Type]::Missing
+    $To = 3
