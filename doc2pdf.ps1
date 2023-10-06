@@ -24,12 +24,30 @@
 ## $MyInvocation.MyCommand.Path – Noam's scripting blog
 ## https://scriptingblog.com/tag/myinvocation-mycommand-path/
 ##
+## Get commandline params
+Param(
+    ## File ppt? must contains this word
+    [Parameter(Mandatory=$false)]
+    [string]
+    $NameCondition,
+
+    ## Default folder
+    [Parameter(Mandatory=$false)]
+    [string]
+    $Folder
+)
+
+
+
 # Get invocation path
-
-
 $scriptpath = $MyInvocation.MyCommand.Path
-$curr_path = Split-Path $scriptpath
+if ($Folder) {
+    $curr_path = $Folder; 
+} else {
+    $curr_path = Split-Path $scriptpath;
+}
 
+Write-Host "Scanning in folder "  $curr_path "to convert files contains "$NameCondition -BackgroundColor Magenta
 
 ##
 ## New-Object - PowerShell - SS64.com
@@ -61,7 +79,13 @@ Get-ChildItem -Path $curr_path -Recurse -Filter *.doc? | ForEach-Object {
     ##     $_.FullName  # this refers specifically to the FullName property
     ## }
     ##
-    
+
+    ## Matching the Name filter
+    if (-Not $_.Name.Contains($NameCondition)) {
+        Write-Host ( "Skip " + $_.Name)
+        return 
+    }
+        
     ##
     ## powershell - Which should I use: "Write-Host", "Write-Output", or "[console]::WriteLine"? - Stack Overflow
     ## https://stackoverflow.com/questions/8755497/which-should-i-use-write-host-write-output-or-consolewriteline
