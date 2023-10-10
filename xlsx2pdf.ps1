@@ -30,12 +30,16 @@ Param(
     $Folder
 )
 
-# Get invocation path
-$scriptpath = $MyInvocation.MyCommand.Path
+#Scan recursively sub folders of the current directory
+$Recurse = $false
+
+# Get current directory
+$scriptpath = Get-Location
 if ($Folder) {
     $curr_path = $Folder; 
 } else {
-    $curr_path = Split-Path $scriptpath;
+    #$curr_path = Split-Path $scriptpath;
+    $curr_path = $scriptpath;
 }
 
 Write-Host "Scanning in folder "  $curr_path "to convert files contains "$NameCondition -BackgroundColor Magenta
@@ -62,25 +66,10 @@ $xlsx_app = New-Object -ComObject excel.application
 # Show the Microsoft Excel app, or not
 $xlsx_app.visible = $true
 
-# Get all objects of type .ppt? in $curr_path and its subfolders
-Get-ChildItem -Path $curr_path -Recurse -Filter *.xls? | ForEach-Object {
-    ##
-    ## powershell - What is the difference between $_. and $_ - Stack Overflow
-    ## https://stackoverflow.com/questions/35209737/what-is-the-difference-between-and
-    ## 
-    ## Get-ChildItem -Path C:\Windows | ForEach-Object {
-    ##     $_  # this references the entire object returned.
-    ## 
-    ##     $_.FullName  # this refers specifically to the FullName property
-    ## }
-    ##
-    
-    ## Matching the Name filter
-    if (-Not $_.Name.Contains($NameCondition)) {
-        Write-Host ( "Skip " + $_.Name)
-        return 
-    }
+# Get all objects of type .ppt? in $curr_path and its subfolders. ## Matching the Name filter
+$FileList  = Get-ChildItem -Path $curr_path  -Recurse:$Recurse -Filter *$NameCondition*.xls?
 
+$FileList | ForEach-Object {   
     ##
     ## powershell - Which should I use: "Write-Host", "Write-Output", or "[console]::WriteLine"? - Stack Overflow
     ## https://stackoverflow.com/questions/8755497/which-should-i-use-write-host-write-output-or-consolewriteline
