@@ -1,9 +1,18 @@
 # doc2pdf
-Convert all .doc|docx files in the current directory and its sub to pdf. Store pdf at the same location.
+Convert all .doc|docx|xlsx files in a directory and its sub to pdf. Store pdf at the same location.
 
-# Usage:
-1. copy this script to the directory contains .doc|.docx or in sub directory.
-2. run script
+# Usages:
+
+```powershell
+doc2pdf.ps1 [[-NameCondition] <string>] [[-Folder] <string>] [<CommonParameters>]
+ppt2pdf.ps1 [[-NameCondition] <string>] [[-Folder] <string>] [<CommonParameters>]
+xlsx2pdf.ps1 [[-NameCondition] <string>] [[-Folder] <string>] [<CommonParameters>]
+```
+For examples:
+
+```powershell
+doc2pdf.ps1 -NameCondition chapter_  -Folder "C:\Users\Public"
+```
 
 ![Example](images/0d4482ca2adde917f85be21c25d3933927c93cbcd2b48191820aa36f8b8f790c.png)  
 
